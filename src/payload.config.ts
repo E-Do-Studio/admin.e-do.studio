@@ -14,6 +14,7 @@ import { Categories } from './collections/Categories'
 import { SubCategories } from './collections/SubCategories'
 import { Brands } from './collections/Brands'
 import { updateExistingMediaUsage } from './migrations/updateExistingMediaUsage'
+import { uploadthingStorage } from '@payloadcms/storage-uploadthing'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -37,6 +38,15 @@ export default buildConfig({
   plugins: [
     payloadCloudPlugin(),
     // storage-adapter-placeholder
+    uploadthingStorage({
+      collections: {
+        media: true,
+      },
+      options: {
+        token: process.env.UPLOADTHING_TOKEN,
+        acl: 'public-read',
+      },
+    }),
   ],
   cors: ['*', 'http://localhost:3001'],
   onInit: async (payload) => {
