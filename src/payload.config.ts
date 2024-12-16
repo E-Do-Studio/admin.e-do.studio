@@ -40,7 +40,12 @@ export default buildConfig({
   ],
   cors: ['*', 'http://localhost:3001'],
   onInit: async (payload) => {
-    // Exécuter la migration
-    await updateExistingMediaUsage(payload)
+    try {
+      // Exécuter la migration
+      await updateExistingMediaUsage(payload)
+    } catch (error) {
+      // Log l'erreur mais ne fait pas échouer l'initialisation
+      console.error("Erreur lors de l'initialisation:", error)
+    }
   },
 })
