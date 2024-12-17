@@ -6,7 +6,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
-import { resendAdapter } from '@payloadcms/email-resend'
+
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Gallery } from './collections/Gallery'
@@ -25,7 +25,6 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-
   collections: [Users, Media, Gallery, Categories, SubCategories, Brands],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
@@ -51,19 +50,4 @@ export default buildConfig({
   ],
   upload: {},
   cors: ['*', 'http://localhost:3001'],
-  onInit: async (payload) => {
-    try {
-      // Exécuter la migration
-      await updateExistingMediaUsage(payload)
-    } catch (error) {
-      // Log l'erreur mais ne fait pas échouer l'initialisation
-      console.error("Erreur lors de l'initialisation:", error)
-    }
-  },
-  maxDepth: 30,
-  email: resendAdapter({
-    defaultFromAddress: 'dev@payloadcms.com',
-    defaultFromName: 'Payload CMS',
-    apiKey: process.env.RESEND_API_KEY || '',
-  }),
 })
