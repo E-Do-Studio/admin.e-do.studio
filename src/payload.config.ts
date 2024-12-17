@@ -6,7 +6,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
-
+import { resendAdapter } from '@payloadcms/email-resend'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Gallery } from './collections/Gallery'
@@ -61,4 +61,9 @@ export default buildConfig({
     }
   },
   maxDepth: 30,
+  email: resendAdapter({
+    defaultFromAddress: 'dev@payloadcms.com',
+    defaultFromName: 'Payload CMS',
+    apiKey: process.env.RESEND_API_KEY || '',
+  }),
 })
