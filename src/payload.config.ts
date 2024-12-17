@@ -25,6 +25,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
+
   collections: [Users, Media, Gallery, Categories, SubCategories, Brands],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
@@ -48,6 +49,7 @@ export default buildConfig({
       },
     }),
   ],
+  upload: {},
   cors: ['*', 'http://localhost:3001'],
   onInit: async (payload) => {
     try {
@@ -58,4 +60,5 @@ export default buildConfig({
       console.error("Erreur lors de l'initialisation:", error)
     }
   },
+  maxDepth: 30,
 })
