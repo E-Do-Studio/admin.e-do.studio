@@ -61,6 +61,7 @@ export const Gallery: CollectionConfig = {
     {
       name: 'brand',
       type: 'relationship',
+      index: true,
       relationTo: 'brands',
       required: true,
       hasMany: false,
