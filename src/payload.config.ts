@@ -47,7 +47,7 @@ export default buildConfig({
     }),
   ],
   upload: {},
-  cors: ['*', 'http://localhost:3001'],
+  cors: ['*', 'http://localhost:3001', 'https://e-do.studio'],
   email: resendAdapter({
     defaultFromAddress: 'dev@payloadcms.com',
     defaultFromName: 'Payload CMS',
