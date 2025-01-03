@@ -50,6 +50,7 @@ export default buildConfig({
   cors: [
     '*',
     'http://localhost:3001',
+    'http://localhost:3002',
     'https://e-do.studio',
     'https://jtdn1hw7-3001.uks1.devtunnels.ms',
   ],
