@@ -15,6 +15,7 @@ import { Categories } from './collections/Categories'
 import { SubCategories } from './collections/SubCategories'
 import { Brands } from './collections/Brands'
 import { Cyclorama } from './collections/Cyclorama'
+import { PostProd } from './collections/PostProd'
 import { uploadthingStorage } from '@payloadcms/storage-uploadthing'
 
 export default buildConfig({
@@ -24,7 +25,7 @@ export default buildConfig({
       baseDir: path.resolve(__dirname),
     },
   },
-  collections: [Users, Media, Gallery, Categories, SubCategories, Brands, Cyclorama],
+  collections: [Users, Media, Gallery, Categories, SubCategories, Brands, Cyclorama, PostProd],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
