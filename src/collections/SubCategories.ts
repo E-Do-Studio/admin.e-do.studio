@@ -14,5 +14,12 @@ export const SubCategories: CollectionConfig = {
       type: 'text',
       required: true,
     },
+    {
+      name: 'category',
+      type: 'relationship',
+      relationTo: 'categories',
+      required: true,
+      hasMany: false,
+    },
   ],
 }

@@ -10,7 +10,7 @@ export const Gallery: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'brand',
-    defaultColumns: ['image', 'name', 'updatedAt'],
+    defaultColumns: ['name', 'brand', 'categories', 'updatedAt'],
   },
   access: {
     read: () => true,
