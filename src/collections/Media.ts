@@ -7,20 +7,47 @@ export const Media: CollectionConfig = {
   },
   upload: {
     staticDir: 'media',
+    formatOptions: {
+      format: 'webp',
+      options: {
+        quality: 80,
+        lossless: false,
+      },
+    },
     imageSizes: [
       {
         name: 'thumbnail',
         width: 400,
         height: 300,
         position: 'center',
+        formatOptions: {
+          format: 'webp',
+          options: {
+            quality: 70,
+            lossless: false,
+          },
+        },
       },
       {
         name: 'card',
         width: 768,
         height: 1024,
         position: 'center',
+        formatOptions: {
+          format: 'webp',
+          options: {
+            quality: 80,
+            lossless: false,
+          },
+        },
       },
     ],
+    resizeOptions: {
+      width: undefined,
+      height: undefined,
+      fit: 'cover',
+      withoutEnlargement: true,
+    },
     adminThumbnail: 'thumbnail',
     mimeTypes: ['image/*'],
   },
