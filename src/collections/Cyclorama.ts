@@ -1,11 +1,10 @@
 import { ImageCell } from '@/components/ImageField/Cell'
-import type { CollectionConfig, CollectionSlug, CustomComponent } from 'payload'
+import type { Access, CollectionConfig, CollectionSlug, CustomComponent } from 'payload'
 import type { Media } from '../payload-types'
 
-// Définition de l'interface pour le type Cyclorama
 interface CycloramaType {
   id: string
-  image: (string | Media)[]
+  image: Media[]
 }
 
 export const Cyclorama: CollectionConfig = {
@@ -15,9 +14,25 @@ export const Cyclorama: CollectionConfig = {
     plural: 'Cyclorama',
   },
   access: {
-    read: () => true,
+    read: (() => true) as Access,
   },
   hooks: {
+    afterRead: [
+      ({ doc }) => {
+        if (doc.image && Array.isArray(doc.image)) {
+          return {
+            ...doc,
+            image: doc.image.map((img: Media | string) => {
+              if (typeof img === 'object' && 'url' in img) {
+                return img.url
+              }
+              return img
+            }),
+          }
+        }
+        return doc
+      },
+    ],
     afterChange: [
       async ({ doc, req }) => {
         if (doc.image && Array.isArray(doc.image)) {
