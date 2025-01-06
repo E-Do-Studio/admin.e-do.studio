@@ -49,13 +49,26 @@ export default buildConfig({
     }),
   ],
   upload: {},
-  cors: [
-    '*',
-    'http://localhost:3001',
-    'http://localhost:3002',
-    'https://e-do.studio',
-    'https://jtdn1hw7-3001.uks1.devtunnels.ms',
-  ],
+  cors: {
+    origins: [
+      '*',
+      'http://localhost:3001',
+      'http://localhost:3002',
+      'https://e-do.studio',
+      'https://jtdn1hw7-3001.uks1.devtunnels.ms',
+    ],
+    headers: [
+      'Netlify-Vary',
+      'Content-Type',
+      'Authorization',
+      'Cache-Control',
+      'X-Requested-With',
+      'Accept',
+      'Origin',
+      'Access-Control-Request-Method',
+      'Access-Control-Request-Headers',
+    ],
+  },
   email: resendAdapter({
     defaultFromAddress: 'dev@payloadcms.com',
     defaultFromName: 'Payload CMS',
