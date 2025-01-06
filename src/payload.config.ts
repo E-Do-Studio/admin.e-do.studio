@@ -50,7 +50,7 @@ export default buildConfig({
   ],
   upload: {},
   cors: {
-    origins: ['*'],
+    origins: ['https://e-do.studio', 'http://localhost:3000', 'http://localhost:3001'],
     headers: [
       'Content-Type',
       'Authorization',
@@ -69,12 +69,6 @@ export default buildConfig({
       'Access-Control-Allow-Credentials',
       'Access-Control-Expose-Headers',
       'Access-Control-Max-Age',
-      'Access-Control-Allow-Credentials',
-      'Access-Control-Allow-Origin',
-      'Access-Control-Allow-Headers',
-      'Access-Control-Allow-Methods',
-      'Access-Control-Allow-Credentials',
-      'Access-Control-Expose-Headers',
     ],
   },
   email: resendAdapter({
