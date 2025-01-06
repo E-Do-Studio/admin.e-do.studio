@@ -5,7 +5,7 @@ import type { Media } from '../payload-types'
 // Définition de l'interface pour le type Cyclorama
 interface CycloramaType {
   id: string
-  image: string | Media
+  image: (string | Media)[]
 }
 
 export const Cyclorama: CollectionConfig = {
@@ -20,15 +20,17 @@ export const Cyclorama: CollectionConfig = {
   hooks: {
     afterChange: [
       async ({ doc, req }) => {
-        if (doc.image) {
-          const imageId = typeof doc.image === 'string' ? doc.image : doc.image.id
-          await req.payload.update({
-            collection: 'media',
-            id: imageId,
-            data: {
-              isAssigned: true,
-            },
-          })
+        if (doc.image && Array.isArray(doc.image)) {
+          for (const img of doc.image) {
+            const imageId = typeof img === 'string' ? img : img.id
+            await req.payload.update({
+              collection: 'media',
+              id: imageId,
+              data: {
+                isAssigned: true,
+              },
+            })
+          }
         }
       },
     ],
@@ -39,19 +41,20 @@ export const Cyclorama: CollectionConfig = {
             collection: 'cyclorama' as CollectionSlug,
             id,
             depth: 0,
-          })) as CycloramaType
+          })) as unknown as CycloramaType
 
-          if (cyclorama?.image) {
-            const imageId =
-              typeof cyclorama.image === 'string' ? cyclorama.image : (cyclorama.image as Media).id
+          if (cyclorama?.image && Array.isArray(cyclorama.image)) {
+            for (const img of cyclorama.image) {
+              const imageId = typeof img === 'string' ? img : (img as Media).id
 
-            await req.payload.update({
-              collection: 'media',
-              id: imageId,
-              data: {
-                isAssigned: false,
-              },
-            })
+              await req.payload.update({
+                collection: 'media',
+                id: imageId,
+                data: {
+                  isAssigned: false,
+                },
+              })
+            }
           }
         } catch (error) {
           console.error('Erreur lors de la suppression:', error)
@@ -64,6 +67,7 @@ export const Cyclorama: CollectionConfig = {
       name: 'image',
       type: 'upload',
       relationTo: 'media',
+      hasMany: true,
       required: true,
       admin: {
         components: {
