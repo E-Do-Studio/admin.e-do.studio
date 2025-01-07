@@ -49,7 +49,7 @@ export const Media: CollectionConfig = {
       withoutEnlargement: true,
     },
     adminThumbnail: 'thumbnail',
-    mimeTypes: ['image/*'],
+    mimeTypes: ['image/*', 'video/mp4', 'video/webm', 'video/ogg'],
   },
   fields: [
     {
@@ -57,12 +57,11 @@ export const Media: CollectionConfig = {
       type: 'text',
       required: true,
       admin: {
-        description: "Alt text pour l'image",
+        description: "Alt text pour l'image ou description de la vidéo",
       },
       hooks: {
         beforeChange: [
           ({ data }) => {
-            // Génère automatiquement l'alt à partir du nom du fichier
             if (data?.filename) {
               const nameWithoutExtension = data.filename.split('.').slice(0, -1).join('.')
               return nameWithoutExtension.replace(/[-_]/g, ' ')
@@ -77,7 +76,7 @@ export const Media: CollectionConfig = {
       type: 'checkbox',
       admin: {
         readOnly: true,
-        description: 'Image utilisée dans la galerie',
+        description: 'Media utilisé dans la galerie',
       },
       label: 'Assigned',
     },
