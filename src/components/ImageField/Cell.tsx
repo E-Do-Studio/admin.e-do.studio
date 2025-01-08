@@ -1,35 +1,29 @@
 import React from 'react'
-import Image from 'next/image'
 import { Media } from '@/payload-types'
-
-// Définissons le type correct pour les props de la cellule
+import Image from 'next/image'
 type CustomCellProps = {
   field: {
     name: string
   }
-  data: {
+  cellData: Media
+  rowData: {
     image: Media
   }
 }
 
-export const ImageCell: React.FC<CustomCellProps> = ({ data }) => {
-  const media = data?.image
+export const ImageCell: React.FC<CustomCellProps> = (props) => {
+  const media = props.cellData
 
-  if (!media?.filename) return null
+  if (!media?.thumbnailURL) return null
 
   return (
-    <div style={{ width: '100%', height: '100%', padding: '5px' }}>
+    <div className="flex items-center justify-center w-[100px] h-[100px]">
       <Image
-        src={`/media/${media.filename}`}
-        alt={media.filename || 'Gallery image'}
-        width={40}
-        height={40}
-        style={{
-          width: '100%',
-          height: '40px',
-          objectFit: 'contain',
-        }}
-        priority
+        src={media.thumbnailURL}
+        alt={media.alt || media.filename || 'Gallery image'}
+        className="object-contain"
+        width={80}
+        height={80}
       />
     </div>
   )

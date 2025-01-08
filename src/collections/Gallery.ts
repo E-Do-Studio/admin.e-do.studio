@@ -9,13 +9,28 @@ export const Gallery: CollectionConfig = {
     plural: 'Gallery',
   },
   admin: {
-    useAsTitle: 'brand',
-    defaultColumns: ['name', 'brand', 'categories', 'updatedAt'],
+    useAsTitle: 'image',
+    defaultColumns: ['image', 'brand', 'categories', 'updatedAt'],
+    pagination: {
+      defaultLimit: 10,
+    },
   },
   access: {
     read: () => true,
   },
   hooks: {
+    afterRead: [
+      async ({ doc, req }) => {
+        if (doc.image && typeof doc.image === 'string') {
+          const media = await req.payload.findByID({
+            collection: 'media',
+            id: doc.image,
+          })
+          doc.image = media
+        }
+        return doc
+      },
+    ],
     afterChange: [
       async ({ doc, req }) => {
         if (doc.image) {
@@ -59,6 +74,18 @@ export const Gallery: CollectionConfig = {
   },
   fields: [
     {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      required: true,
+      admin: {
+        components: {
+          Cell: ImageCell as any,
+        },
+        description: 'Select or upload an image',
+      },
+    },
+    {
       name: 'brand',
       type: 'relationship',
       index: true,
@@ -67,18 +94,6 @@ export const Gallery: CollectionConfig = {
       hasMany: false,
       admin: {
         position: 'sidebar',
-      },
-    },
-    {
-      name: 'image',
-      type: 'upload',
-      relationTo: 'media',
-      required: true,
-      admin: {
-        components: {
-          Cell: ImageCell as unknown as CustomComponent,
-        },
-        description: 'Select or upload an image',
       },
     },
     {
