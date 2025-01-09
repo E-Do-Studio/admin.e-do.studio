@@ -27,6 +27,7 @@ export default buildConfig({
   },
   collections: [Users, Media, Gallery, Categories, SubCategories, Brands, Cyclorama, PostProd],
   editor: lexicalEditor(),
+  defaultDepth: 1,
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),

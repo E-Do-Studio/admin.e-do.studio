@@ -19,18 +19,6 @@ export const Gallery: CollectionConfig = {
     read: () => true,
   },
   hooks: {
-    afterRead: [
-      async ({ doc, req }) => {
-        if (doc.image && typeof doc.image === 'string') {
-          const media = await req.payload.findByID({
-            collection: 'media',
-            id: doc.image,
-          })
-          doc.image = media
-        }
-        return doc
-      },
-    ],
     afterChange: [
       async ({ doc, req }) => {
         if (doc.image) {
